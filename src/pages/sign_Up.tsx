@@ -1,7 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-//import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,11 @@ import { registerSchema } from '@/validators/auth';
 import { z } from 'zod';
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import Image from 'next/image';
+import SignUpImage from '../../public/signUpImage.png';
 
 type RegisterInput = z.infer<typeof registerSchema>;
 
@@ -27,6 +33,7 @@ export default function SignUp() {
       email: '',
       role: '',
       username: '',
+      birth: new Date(),
       password: '',
       confirmPassword: '',
     },
@@ -46,8 +53,9 @@ export default function SignUp() {
   }
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <Card className={cn('w-[380px]')}>
+    <div className="flex items-center gap-[350px]">
+      <Image className={cn('h-screen')} src={SignUpImage} alt="회원가입 페이지 이미지" />
+      <Card className={cn('w-[380px] -translate-y-10')}>
         <CardHeader>
           <CardTitle>계정을 생성합니다</CardTitle>
           <CardDescription>필수 정보를 입력해주세요.</CardDescription>
@@ -86,7 +94,7 @@ export default function SignUp() {
                             </FormControl>
                             <button
                               type="button"
-                              onClick={() => console.log(1)}
+                              onClick={() => console.log('중복확인')}
                               className="absolute top-0 bottom-0 right-5 text-sm">
                               중복확인
                             </button>
@@ -123,7 +131,50 @@ export default function SignUp() {
                     </FormItem>
                   )}
                 />
-                {/* <FormField
+              </motion.div>
+              <motion.div
+                className={cn('space-y-3 absolute top-0 left-0 right-0')}
+                animate={{ translateX: `${(1 - step) * 100}%` }}
+                style={{ translateX: `${(1 - step) * 100}%` }}
+                transition={{
+                  ease: 'easeInOut',
+                }}>
+                <FormField
+                  control={form.control}
+                  name="birth"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>생일</FormLabel>
+                      <br />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={'outline'}
+                              className={cn(
+                                'w-[240px] pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground',
+                              )}>
+                              {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) => date >= new Date() || date < new Date('1900-01-01')}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
                   control={form.control}
                   name="role"
                   render={({ field }) => (
@@ -136,19 +187,19 @@ export default function SignUp() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="admin">관리자</SelectItem>
-                          <SelectItem value="user">일반사용자</SelectItem>
+                          <SelectItem value="관리자">관리자</SelectItem>
+                          <SelectItem value="일반사용자">일반사용자</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>
                   )}
-                /> */}
+                />
               </motion.div>
               <motion.div
                 className={cn('space-y-3 absolute top-0 left-0 right-0')}
-                animate={{ translateX: `${(1 - step) * 100}%` }}
-                style={{ translateX: `${(1 - step) * 100}%` }}
+                animate={{ translateX: `${(2 - step) * 100}%` }}
+                style={{ translateX: `${(2 - step) * 100}%` }}
                 transition={{
                   ease: 'easeInOut',
                 }}>
@@ -180,25 +231,34 @@ export default function SignUp() {
                 />
               </motion.div>
               <div className={'flex gap-2'}>
-                <Button className={cn({ hidden: step === 0 })} type="submit">
+                <Button className={cn({ hidden: step === 0 || step === 1 })} type="submit">
                   계정 등록하기
                 </Button>
                 <Button
                   type="button"
-                  className={cn({ hidden: step === 1 })}
+                  className={cn({ hidden: step === 2 })}
                   onClick={() => {
-                    form.trigger(['phone', 'email', 'username', 'id']);
-                    const phoneState = form.getFieldState('phone');
-                    const emailState = form.getFieldState('email');
-                    const usernameState = form.getFieldState('username');
-                    const idState = form.getFieldState('id');
+                    if (step === 0) {
+                      form.trigger(['phone', 'email', 'username', 'id']);
+                      const phoneState = form.getFieldState('phone');
+                      const emailState = form.getFieldState('email');
+                      const usernameState = form.getFieldState('username');
+                      const idState = form.getFieldState('id');
 
-                    if (!phoneState.isDirty || phoneState.invalid) return;
-                    if (!emailState.isDirty || emailState.invalid) return;
-                    if (!usernameState.isDirty || usernameState.invalid) return;
-                    if (!idState.isDirty || idState.invalid) return;
+                      if (!phoneState.isDirty || phoneState.invalid) return;
+                      if (!emailState.isDirty || emailState.invalid) return;
+                      if (!usernameState.isDirty || usernameState.invalid) return;
+                      if (!idState.isDirty || idState.invalid) return;
+                      setStep(1);
+                    } else if (step === 1) {
+                      form.trigger(['birth', 'role']);
+                      const birthState = form.getFieldState('birth');
+                      const roleState = form.getFieldState('role');
 
-                    setStep(1);
+                      if (!birthState.isDirty || birthState.invalid) return;
+                      if (!roleState.isDirty || roleState.invalid) return;
+                      setStep(2);
+                    }
                   }}>
                   다음 단계로
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -208,7 +268,11 @@ export default function SignUp() {
                   variant={'ghost'}
                   className={cn({ hidden: step === 0 })}
                   onClick={() => {
-                    setStep(0);
+                    if (step === 2) {
+                      setStep(1);
+                    } else {
+                      setStep(0);
+                    }
                   }}>
                   이전 단계로
                 </Button>

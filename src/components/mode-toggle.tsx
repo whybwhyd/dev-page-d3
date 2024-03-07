@@ -23,9 +23,9 @@ export function ModeToggle({ className, ...props }: React.HTMLAttributes<HTMLDiv
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('Point')}>point</DropdownMenuItem>
           <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme('orange')}>Orange</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('normal')}>Normal</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

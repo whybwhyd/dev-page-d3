@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
       attribute="class"
       defaultTheme="system"
       enableSystem
-      themes={['light', 'dark', 'orange']}
+      themes={['point', 'dark', 'normal']}
       disableTransitionOnChange>
       <div className={'min-h-screen'}>
         <Header />
