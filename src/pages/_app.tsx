@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/_header';
-import { server } from '../mocks/server';
+//import { server } from '../mocks/server';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -13,9 +13,9 @@ const fontSans = FontSans({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  if (process.env.NODE_ENV === 'development') {
-    server.listen();
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   server.listen();
+  // }
   return (
     <ThemeProvider
       attribute="class"

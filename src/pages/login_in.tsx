@@ -8,14 +8,14 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useApi } from '@/mocks/api';
+//import { useApi } from '@/mocks/api';
+import { data } from '@/mocks/data/meberResultData';
 
 import { useToast } from '@/components/ui/use-toast';
 
 type LoginInput = z.infer<typeof loginSchema>;
 
 export default function LoginIn() {
-  const { data } = useApi();
   const { toast } = useToast();
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),

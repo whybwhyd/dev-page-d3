@@ -1,4 +1,4 @@
-export const memberResultData = {
+export const data = {
   users: [
     {
       id: 1,

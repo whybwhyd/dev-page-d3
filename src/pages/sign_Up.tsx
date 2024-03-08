@@ -15,7 +15,8 @@ import FirstMotiondiv from '@/components/signUp/firstMotiondiv';
 import SecondMotiondiv from '@/components/signUp/secondMotiondiv';
 import ThirdMotiondiv from '@/components/signUp/thirdMotiondiv';
 import type { Control } from 'react-hook-form';
-import { usePostApi } from '@/mocks/api';
+//import { usePostApi } from '@/mocks/api';
+import { data } from '@/mocks/data/meberResultData';
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 export interface MotiondivPropType {
@@ -25,7 +26,6 @@ export interface MotiondivPropType {
 
 export default function SignUp() {
   const [step, setStep] = useState<number>(0);
-  const { postData } = usePostApi();
   const { toast } = useToast();
 
   const form = useForm<RegisterInput>({
@@ -81,7 +81,7 @@ export default function SignUp() {
       });
       return;
     }
-    postData(data);
+    //postData(data);
   }
 
   // 페이지 네비게이션을 위해 색깔이 달라지는 Dot을 추가했습니다.
