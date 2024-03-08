@@ -16,7 +16,7 @@ import SecondMotiondiv from '@/components/signUp/secondMotiondiv';
 import ThirdMotiondiv from '@/components/signUp/thirdMotiondiv';
 import type { Control } from 'react-hook-form';
 //import { usePostApi } from '@/mocks/api';
-import { data } from '@/mocks/data/meberResultData';
+//import { data } from '@/mocks/data/meberResultData';
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 export interface MotiondivPropType {
