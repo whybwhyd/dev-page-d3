@@ -3,15 +3,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { useApi } from '@/mocks/api';
+//import { useApi } from '@/mocks/api';
 import type { MotiondivPropType } from '@/pages/sign_up';
 import { Check } from 'lucide-react';
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { data } from '@/mocks/data/meberResultData';
 
 export default function FirstMotiondiv(props: MotiondivPropType) {
   const { step, formControlProp } = props;
-  const { data } = useApi();
+  //const { data } = useApi();
   const [isDoubleId, SetIdDoubleId] = useState(false);
   const duplicateCheckHandler = (id: string) => {
     // 중복 검사
