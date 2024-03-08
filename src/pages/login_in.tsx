@@ -8,21 +8,35 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useApi } from '@/mocks/api';
+
+import { useToast } from '@/components/ui/use-toast';
 
 type LoginInput = z.infer<typeof loginSchema>;
 
 export default function LoginIn() {
+  const { data } = useApi();
+  const { toast } = useToast();
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      id: '',
+      userId: '',
       password: '',
       idCheck: false,
     },
   });
 
-  const onSubmit = (data: LoginInput) => {
-    alert(JSON.stringify(data, null, 4));
+  const onSubmit = (formData: LoginInput) => {
+    const userCheck = data?.users?.some((user) => {
+      return user.userId === formData.userId && user.password === formData.password;
+    });
+    if (userCheck) {
+      console.log(formData);
+      toast({ description: '성공' });
+    }
+    if (!userCheck) {
+      toast({ description: '실패' });
+    }
   };
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 m-0">
@@ -35,7 +49,7 @@ export default function LoginIn() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
-                name="id"
+                name="userId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>아이디</FormLabel>
@@ -72,8 +86,8 @@ export default function LoginIn() {
                       />
                     </FormControl>
                     <div className="flex gap-[50px]">
-                      <FormLabel className="">아이디 기억하기</FormLabel>
-                      <FormLabel className="">아이디/비밀번호 찾기</FormLabel>
+                      <FormLabel>아이디 기억하기</FormLabel>
+                      <FormLabel>아이디/비밀번호 찾기</FormLabel>
                     </div>
                   </FormItem>
                 )}

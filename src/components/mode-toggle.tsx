@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function ModeToggle({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  const { setTheme, themes } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <div className={className} {...props}>

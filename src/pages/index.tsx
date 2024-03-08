@@ -1,19 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/router';
 import Typewriter from 'typewriter-effect';
-import axios from 'axios';
 
 export default function Home() {
   const router = useRouter();
-  const getTest = () => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/todos')
-      .then((res) => {
-        const { data } = res;
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
-  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-10">
       <div className="w-max text-9xl">

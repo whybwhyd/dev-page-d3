@@ -21,7 +21,7 @@ export const registerSchema = z.object({
     .nonempty({ message: '이름은 필수 입력값입니다.' })
     .min(2, { message: '이름은 2글자 이상이어야 합니다.' })
     .max(100, { message: '이름은 100글자 이하이어야 합니다.' }),
-  id: z
+  userId: z
     .string()
     .nonempty({ message: '아이디는 필수 입력값입니다.' })
     .min(4, { message: '아이디는 4글자 이상이어야 합니다.' })
@@ -48,7 +48,7 @@ export const registerSchema = z.object({
     ),
 });
 export const loginSchema = z.object({
-  id: z
+  userId: z
     .string()
     .nonempty({ message: '아이디는 필수 입력값입니다.' })
     .min(4, { message: '아이디는 4글자 이상이어야 합니다.' })
